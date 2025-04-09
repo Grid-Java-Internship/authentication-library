@@ -1,0 +1,5 @@
+microservicesUrls:
+  auth-service: "http://auth-service:8080"
+
+#server:
+#  port: 8090
