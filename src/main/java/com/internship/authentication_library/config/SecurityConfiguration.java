@@ -7,7 +7,11 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Component
@@ -17,16 +21,21 @@ public class SecurityConfiguration {
 
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
-            String[] permittedRequestForAll,
-            String[] permittedRequestForSuperAdmin,
-            String[] permittedRequestForAdmin
+            List<RequestMatcherInfo> permittedRequestForAll,
+            List<RequestMatcherInfo> permittedRequestForSuperAdmin,
+            List<RequestMatcherInfo> permittedRequestForAdmin
     ) throws Exception {
+
+        RequestMatcher[] matchersForAll = convertToRequestMatchers(permittedRequestForAll);
+        RequestMatcher[] matchersForSuperAdmin = convertToRequestMatchers(permittedRequestForSuperAdmin);
+        RequestMatcher[] matchersForAdmin = convertToRequestMatchers(permittedRequestForAdmin);
+
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(permittedRequestForSuperAdmin).hasRole("SUPER_ADMIN")
-                        .requestMatchers(permittedRequestForAdmin).hasAnyRole("ADMIN","SUPER_ADMIN")
-                        .requestMatchers(permittedRequestForAll)
+                        .requestMatchers(matchersForSuperAdmin).hasRole("SUPER_ADMIN")
+                        .requestMatchers(matchersForAdmin).hasAnyRole("ADMIN","SUPER_ADMIN")
+                        .requestMatchers(matchersForAll)
                         .permitAll()
                         .anyRequest()
                         .authenticated()
@@ -36,6 +45,17 @@ public class SecurityConfiguration {
                 .addFilterAt(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+
+
+    private RequestMatcher[] convertToRequestMatchers(List<RequestMatcherInfo> requests) {
+        if (requests == null || requests.isEmpty()) {
+            return new RequestMatcher[0];
+        }
+        return requests.stream()
+                .map(info -> new AntPathRequestMatcher(info.getPattern(), info.getMethod().name()))
+                .toArray(RequestMatcher[]::new);
     }
 
 }

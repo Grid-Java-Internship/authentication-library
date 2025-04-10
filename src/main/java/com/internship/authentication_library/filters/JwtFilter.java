@@ -65,13 +65,16 @@ public class JwtFilter extends OncePerRequestFilter {
                 }
                 else {
                     setErrorResponse(response, "There was an issue with reading the token.");
+                    return;
                 }
 
             } else {
                 setErrorResponse(response, "JWT is invalid or expired.");
+                return;
             }
         } catch (ParseException | JOSEException e) {
             setErrorResponse(response, "There was an issue with reading the token.");
+            return;
         }
 
         filterChain.doFilter(request, response);
