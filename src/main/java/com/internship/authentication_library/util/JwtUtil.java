@@ -71,7 +71,6 @@ public class JwtUtil {
     }
 
     public UserDTO extractUserDTO(String token) throws ParseException {
-        System.out.println("ROLE JE : "+List.of(new SimpleGrantedAuthority("ROLE_"+extractRole(token))));
         return UserDTO
                 .builder()
                 .username(String.valueOf(extractUserId(token)))
