@@ -1,5 +1,0 @@
-/Users/mkreckovic/Desktop/CapstoneProject/authentication-library/src/main/java/com/internship/authentication_library/config/SecurityConfiguration.java
-/Users/mkreckovic/Desktop/CapstoneProject/authentication-library/src/main/java/com/internship/authentication_library/feign/AuthService.java
-/Users/mkreckovic/Desktop/CapstoneProject/authentication-library/src/main/java/com/internship/authentication_library/feign/UserDTO.java
-/Users/mkreckovic/Desktop/CapstoneProject/authentication-library/src/main/java/com/internship/authentication_library/filters/JwtFilter.java
-/Users/mkreckovic/Desktop/CapstoneProject/authentication-library/src/main/java/com/internship/authentication_library/util/JwtUtil.java

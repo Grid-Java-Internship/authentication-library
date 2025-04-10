@@ -1,2 +1,0 @@
-microservicesUrls:
-  auth-service: "http://auth-service:8080"

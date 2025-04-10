@@ -1,6 +1,0 @@
-com/internship/authentication_library/filters/JwtFilter.class
-com/internship/authentication_library/feign/UserDTO.class
-com/internship/authentication_library/feign/UserDTO$UserDTOBuilder.class
-com/internship/authentication_library/feign/AuthService.class
-com/internship/authentication_library/util/JwtUtil.class
-com/internship/authentication_library/config/SecurityConfiguration.class
