@@ -4,7 +4,7 @@
     <distributionManagement>
         <repository>
             <id>github</id>
-            <name>GitHub Segi2001 Apache Maven Packages</name>
+            <name>Apache Maven Packages</name>
             <url>https://maven.pkg.github.com/Grid-Java-Internship/maven-libraries</url>
         </repository>
     </distributionManagement>
@@ -18,7 +18,7 @@
     </parent>
     <groupId>com.internship</groupId>
     <artifactId>authentication_library</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.5-SNAPSHOT</version>
     <name>authentication_library</name>
     <description>Library for Authentication</description>
     <url/>
