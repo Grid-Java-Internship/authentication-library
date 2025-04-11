@@ -18,27 +18,30 @@ import java.util.List;
 public class SecurityConfiguration {
 
     private final JwtFilter jwtFilter;
+    private static final String ADMIN_ROLE="ADMIN";
+    private static final String USER_ROLE="USER";
+    private static final String SUPER_ADMIN_ROLE="SUPER_ADMIN";
 
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
             List<RequestMatcherInfo> permittedRequestForAll,
             List<RequestMatcherInfo> permittedRequestForSuperAdmin,
-            List<RequestMatcherInfo> permittedRequestForAdmin
+            List<RequestMatcherInfo> permittedRequestForAdminOrSuperAdmin,
+            List<RequestMatcherInfo> permittedRequestForUsersOrAdminOrSuperAdmin
     ) throws Exception {
 
         RequestMatcher[] matchersForAll = convertToRequestMatchers(permittedRequestForAll);
         RequestMatcher[] matchersForSuperAdmin = convertToRequestMatchers(permittedRequestForSuperAdmin);
-        RequestMatcher[] matchersForAdmin = convertToRequestMatchers(permittedRequestForAdmin);
+        RequestMatcher[] matchersForAdminOrSuperAdmin = convertToRequestMatchers(permittedRequestForAdminOrSuperAdmin);
+        RequestMatcher[] matchersForUsersOrAdminOrSuperAdmin= convertToRequestMatchers(permittedRequestForUsersOrAdminOrSuperAdmin);
 
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(matchersForSuperAdmin).hasRole("SUPER_ADMIN")
-                        .requestMatchers(matchersForAdmin).hasAnyRole("ADMIN","SUPER_ADMIN")
-                        .requestMatchers(matchersForAll)
-                        .permitAll()
-                        .anyRequest()
-                        .authenticated()
+                        .requestMatchers(matchersForSuperAdmin).hasRole(SUPER_ADMIN_ROLE)
+                        .requestMatchers(matchersForAdminOrSuperAdmin).hasAnyRole(ADMIN_ROLE,SUPER_ADMIN_ROLE)
+                        .requestMatchers(matchersForUsersOrAdminOrSuperAdmin).hasAnyRole(USER_ROLE,ADMIN_ROLE,SUPER_ADMIN_ROLE)
+                        .requestMatchers(matchersForAll).permitAll()
                 )
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -29,7 +29,7 @@ public class JwtUtil {
             return false;
         }
 
-        JWK jwk = JWK.parse(authService.getPublicKey());
+        JWK jwk = JWK.parse(authService.getPublicKey(signedJWT.getHeader().getKeyID()));
         RSAKey rsaPublicKeyJwk = jwk.toRSAKey();
 
         RSAPublicKey publicKey = rsaPublicKeyJwk.toRSAPublicKey();
