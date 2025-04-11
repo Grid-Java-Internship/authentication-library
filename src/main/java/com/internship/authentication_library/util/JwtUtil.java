@@ -11,7 +11,6 @@ import com.nimbusds.jwt.SignedJWT;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
-import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.text.ParseException;
 import java.util.Date;
@@ -23,17 +22,12 @@ public class JwtUtil {
 
     private final AuthService authService;
 
-    public RSAPrivateKey getPrivateKey(RSAKey rsaKey) throws JOSEException {
-        return rsaKey.toRSAPrivateKey();
-    }
-
-
-    public RSAPublicKey getPublicKey(RSAKey rsaKey) throws JOSEException {
-        return rsaKey.toRSAPublicKey();
-    }
-
     public boolean validateToken(String token) throws JOSEException, ParseException {
         SignedJWT signedJWT = SignedJWT.parse(token);
+
+        if (signedJWT.getJWTClaimsSet().getClaim("rti") == null) {
+            return false;
+        }
 
         JWK jwk = JWK.parse(authService.getPublicKey());
         RSAKey rsaPublicKeyJwk = jwk.toRSAKey();
