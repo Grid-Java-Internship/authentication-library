@@ -1,5 +1,6 @@
 package com.internship.authentication_library.config;
 
+import com.internship.authentication_library.filters.ApiKeyFilter;
 import com.internship.authentication_library.filters.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,9 +19,11 @@ import java.util.List;
 public class SecurityConfiguration {
 
     private final JwtFilter jwtFilter;
+    private final ApiKeyFilter apiKeyFilter;
     private static final String ADMIN_ROLE="ADMIN";
     private static final String USER_ROLE="USER";
     private static final String SUPER_ADMIN_ROLE="SUPER_ADMIN";
+    private static final String API_KEY_ROLE="API_KEY";
 
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
@@ -38,14 +41,15 @@ public class SecurityConfiguration {
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(matchersForSuperAdmin).hasRole(SUPER_ADMIN_ROLE)
-                        .requestMatchers(matchersForAdminOrSuperAdmin).hasAnyRole(ADMIN_ROLE,SUPER_ADMIN_ROLE)
-                        .requestMatchers(matchersForUsersOrAdminOrSuperAdmin).hasAnyRole(USER_ROLE,ADMIN_ROLE,SUPER_ADMIN_ROLE)
+                        .requestMatchers(matchersForSuperAdmin).hasAnyRole(SUPER_ADMIN_ROLE, API_KEY_ROLE)
+                        .requestMatchers(matchersForAdminOrSuperAdmin).hasAnyRole(ADMIN_ROLE,SUPER_ADMIN_ROLE, API_KEY_ROLE)
+                        .requestMatchers(matchersForUsersOrAdminOrSuperAdmin).hasAnyRole(USER_ROLE,ADMIN_ROLE,SUPER_ADMIN_ROLE, API_KEY_ROLE)
                         .requestMatchers(matchersForAll).permitAll()
                 )
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterAt(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterAt(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(apiKeyFilter, JwtFilter.class);
 
         return http.build();
     }
