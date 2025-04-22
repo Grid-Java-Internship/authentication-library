@@ -1,6 +1,6 @@
 package com.internship.authentication_library.feign;
 
-import com.internship.authentication_library.feign.interceptor.auth_service.AuthServiceFeignConfiguration;
+import com.internship.authentication_library.feign.interceptor.AuthServiceFeignConfiguration;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

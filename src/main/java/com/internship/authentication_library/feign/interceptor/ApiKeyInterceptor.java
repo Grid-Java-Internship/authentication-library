@@ -1,15 +1,14 @@
-package com.internship.authentication_library.feign.interceptor.auth_service;
+package com.internship.authentication_library.feign.interceptor;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 
-public class AuthServiceInterceptor implements RequestInterceptor {
+@RequiredArgsConstructor
+public class ApiKeyInterceptor implements RequestInterceptor {
 
     private static final String API_KEY_HEADER = "X-API-KEY";
-
-    @Value("${security.feign.auth-service}")
-    private String apiKey;
+    private final String apiKey;
 
     @Override
     public void apply(RequestTemplate template) {
