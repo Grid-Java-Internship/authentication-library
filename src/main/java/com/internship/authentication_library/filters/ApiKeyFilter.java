@@ -25,7 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ApiKeyFilter extends OncePerRequestFilter {
 
-    private static final String API_KEY_HEADER = "X-API-KEY";
+    public static final String API_KEY_HEADER = "X-API-KEY";
 
     private static final String API_KEY_ROLE = "ROLE_API_KEY";
 

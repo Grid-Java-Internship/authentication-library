@@ -1,5 +1,6 @@
 package com.internship.authentication_library.feign.interceptor;
 
+import com.internship.authentication_library.filters.ApiKeyFilter;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.RequiredArgsConstructor;
@@ -7,13 +8,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ApiKeyInterceptor implements RequestInterceptor {
 
-    private static final String API_KEY_HEADER = "X-API-KEY";
     private final String apiKey;
 
     @Override
     public void apply(RequestTemplate template) {
         if (apiKey != null && !apiKey.isEmpty()) {
-            template.header(API_KEY_HEADER, apiKey);
+            template.header(ApiKeyFilter.API_KEY_HEADER, apiKey);
         }
     }
 }
