@@ -18,7 +18,7 @@
     </parent>
     <groupId>com.internship</groupId>
     <artifactId>authentication_library</artifactId>
-    <version>0.0.9-SNAPSHOT</version>
+    <version>0.2.5-SNAPSHOT</version>
     <name>authentication_library</name>
     <description>Library for Authentication</description>
     <url/>
