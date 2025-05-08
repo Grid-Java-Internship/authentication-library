@@ -16,7 +16,7 @@ public class UserServiceFeignConfiguration {
     @Value("${security.feign.user-service.api-key}")
     private String apiKey;
 
-    @Bean
+    @Bean("apiKeyRequestInterceptorUser")
     public RequestInterceptor apiKeyRequestInterceptor() {
         return new ApiKeyInterceptor(apiKey);
     }

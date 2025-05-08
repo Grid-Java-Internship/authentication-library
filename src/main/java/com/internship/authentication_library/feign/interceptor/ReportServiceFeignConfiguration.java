@@ -16,7 +16,7 @@ public class ReportServiceFeignConfiguration {
     @Value("${security.feign.report-service.api-key}")
     private String apiKey;
 
-    @Bean
+    @Bean("apiKeyRequestInterceptorReport")
     public RequestInterceptor apiKeyRequestInterceptor() {
         return new ApiKeyInterceptor(apiKey);
     }

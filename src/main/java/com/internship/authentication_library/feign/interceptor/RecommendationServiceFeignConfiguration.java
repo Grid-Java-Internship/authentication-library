@@ -16,7 +16,7 @@ public class RecommendationServiceFeignConfiguration {
     @Value("${security.feign.recommendation-service.api-key}")
     private String apiKey;
 
-    @Bean
+    @Bean("apiKeyRequestInterceptorRecommendation")
     public RequestInterceptor apiKeyRequestInterceptor() {
         return new ApiKeyInterceptor(apiKey);
     }

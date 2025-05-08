@@ -16,7 +16,7 @@ public class PaymentServiceFeignConfiguration {
     @Value("${security.feign.payment-service.api-key}")
     private String apiKey;
 
-    @Bean
+    @Bean("apiKeyRequestInterceptorPayment")
     public RequestInterceptor apiKeyRequestInterceptor() {
         return new ApiKeyInterceptor(apiKey);
     }

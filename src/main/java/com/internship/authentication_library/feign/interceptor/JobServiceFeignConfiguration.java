@@ -16,7 +16,7 @@ public class JobServiceFeignConfiguration {
     @Value("${security.feign.job-service.api-key}")
     private String apiKey;
 
-    @Bean
+    @Bean("apiKeyRequestInterceptorJob")
     public RequestInterceptor apiKeyRequestInterceptor() {
         return new ApiKeyInterceptor(apiKey);
     }
