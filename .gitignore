@@ -211,4 +211,4 @@ dist-ssr/
 *.local
 .firebase/
 env.properties
-htmlReport
+/htmlReport
