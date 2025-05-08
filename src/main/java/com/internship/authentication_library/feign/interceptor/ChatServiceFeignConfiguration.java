@@ -16,7 +16,7 @@ public class ChatServiceFeignConfiguration {
     @Value("${security.feign.chat-service.api-key}")
     private String apiKey;
 
-    @Bean
+    @Bean("apiKeyRequestInterceptorChat")
     public RequestInterceptor apiKeyRequestInterceptor() {
         return new ApiKeyInterceptor(apiKey);
     }

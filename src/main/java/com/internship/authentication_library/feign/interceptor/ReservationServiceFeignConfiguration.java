@@ -16,7 +16,7 @@ public class ReservationServiceFeignConfiguration {
     @Value("${security.feign.reservation-service.api-key}")
     private String apiKey;
 
-    @Bean
+    @Bean("apiKeyRequestInterceptorReservation")
     public RequestInterceptor apiKeyRequestInterceptor() {
         return new ApiKeyInterceptor(apiKey);
     }

@@ -16,7 +16,7 @@ public class NotificationServiceFeignConfiguration {
     @Value("${security.feign.notification-service.api-key}")
     private String apiKey;
 
-    @Bean
+    @Bean("apiKeyRequestInterceptorNotification")
     public RequestInterceptor apiKeyRequestInterceptor() {
         return new ApiKeyInterceptor(apiKey);
     }

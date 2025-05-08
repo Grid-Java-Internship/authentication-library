@@ -17,7 +17,7 @@ public class ReviewServiceFeignConfiguration {
     @Value("${security.feign.review-service.api-key}")
     private String apiKey;
 
-    @Bean
+    @Bean("apiKeyRequestInterceptorReview")
     public RequestInterceptor apiKeyRequestInterceptor() {
         return new ApiKeyInterceptor(apiKey);
     }
