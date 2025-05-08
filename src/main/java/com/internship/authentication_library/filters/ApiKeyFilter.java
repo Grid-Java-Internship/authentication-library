@@ -41,6 +41,11 @@ public class ApiKeyFilter extends OncePerRequestFilter {
         if(SecurityContextHolder.getContext().getAuthentication() == null) {
             String actualApiKey = request.getHeader(API_KEY_HEADER);
 
+            if(actualApiKey == null) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+
             log.debug("Check API-KEY for path: {}", request.getRequestURI());
 
             if (!StringUtils.hasText(actualApiKey) || !apiKey.equals(actualApiKey)) {

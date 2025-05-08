@@ -114,20 +114,6 @@ class ApiKeyFilterTest {
     }
 
     @Test
-    void doFilterInternal_shouldSetErrorResponseAndNotProceed_whenApiKeyHeaderIsMissing() throws ServletException, IOException {
-        when(securityContext.getAuthentication()).thenReturn(null);
-
-        apiKeyFilter.doFilterInternal(mockRequest, response, filterChain);
-
-        verify(securityContext, times(1)).getAuthentication();
-        verify(securityContext, never()).setAuthentication(any());
-        verify(filterChain, never()).doFilter(any(), any());
-        verify(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        verify(response).setContentType("application/json");
-        verify(response, times(3)).getWriter();
-    }
-
-    @Test
     void doFilterInternal_shouldSetErrorResponseAndNotProceed_whenApiKeyHeaderIsInvalid() throws ServletException, IOException {
         when(securityContext.getAuthentication()).thenReturn(null);
         mockRequest.addHeader(ApiKeyFilter.API_KEY_HEADER, "invalid-key");
