@@ -3,6 +3,7 @@ package com.internship.authentication_library.config;
 import com.internship.authentication_library.filters.ApiKeyFilter;
 import com.internship.authentication_library.filters.JwtFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,6 +17,11 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Component
+@ConditionalOnProperty(
+        name = "security.jwt.enabled",
+        havingValue = "true",
+        matchIfMissing = true
+)
 public class SecurityConfiguration {
 
     private final JwtFilter jwtFilter;
